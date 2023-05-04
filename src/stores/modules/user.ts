@@ -1,4 +1,4 @@
-import type { user } from '@/types/user.d.ts'
+import type { user } from '@/types/user'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
