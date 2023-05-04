@@ -4,6 +4,9 @@ interface Window {
     securityJsCode: string
   }
   QC: {
-    Login: ({btnId:string}) => void
+    Login: {
+      check(): boolean
+      getMe(cb: (openId: string) => void): void
+    }
   }
 }

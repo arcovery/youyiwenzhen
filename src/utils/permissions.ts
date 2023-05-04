@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css'
 import { showNotify } from 'vant'
 
 // 白名单
-const whiteList = ['/login', '/register']
+const whiteList = ['/login', '/register', '/login/callback']
 
 // 进度条配置
 nProgress.configure({
@@ -24,6 +24,8 @@ router.beforeEach((to, from, next) => {
   }
   //否则跳转登录页面
   else {
+    console.log(to.path);
+
     if (!whiteList.includes(to.path)) {
       showNotify('请先登录')
       next({ path: '/login', query: { returnUrl: to.fullPath } })

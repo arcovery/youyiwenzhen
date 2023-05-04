@@ -10,14 +10,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/login/index.vue'),
-      children: [
-        {
-          path: 'callback',
-          name: 'callback',
-          component: () => import('@/views/login/components/callback.vue')
-        }
-      ]
+      component: () => import('@/views/login/index.vue')
     },
     {
       path: '/layout',
@@ -121,6 +114,12 @@ const router = createRouter({
       path: '/order/logistics/:id',
       component: () => import('@/views/order/OrderLogistics.vue'),
       meta: { title: '物流详情' }
+    },
+    {
+      path: '/login/callback',
+      name: 'callback',
+      component: () => import('@/views/login/components/callback.vue'),
+      meta: { title: '登录' }
     },
     {
       path: '/404',

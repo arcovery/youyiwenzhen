@@ -39,3 +39,35 @@ export function uploadFileAPI(file: File) {
     data: fd
   })
 }
+// 微信登录
+export function loginByWechatAPI() {
+  return request<{
+    code: number
+    msg: string
+    type: string
+    url: string
+    qrcode: string
+  }>({
+    method: 'GET',
+    url: '/wechat/connect.php?act=login&appid=1599&appkey=953e44a9c89f435e1b3624fe89cf5c95&type=wx&redirect_uri=192.168.33.39:5173/login/callback'
+  })
+}
+
+// 获取微信用户信息
+export function getWechatUserInfoAPI(code: string) {
+  return request<{
+    code: number
+    msg: string
+    type: string
+    access_token: string
+    social_uid: string
+    faceimg: string
+    nickname: string
+    location: string
+    gender: string
+    ip: string
+  }>({
+    method: 'GET',
+    url: `/wechat/connect.php?act=callback&appid=1599&appkey=953e44a9c89f435e1b3624fe89cf5c95&type=wx&code=${code}`
+  })
+}

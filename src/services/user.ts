@@ -1,8 +1,10 @@
 import type {
+  CodeType,
   PatientList,
   patientConsultOrderListData,
   patientConsultOrderListQuery,
   patientInfo,
+  user,
   userInfo
 } from '@/types/user'
 import { request } from '@/utils/request'
@@ -64,7 +66,6 @@ export const getPatientDetailAPI = (id: string) =>
     url: `/patient/info/${id}`
   })
 
-
 // 查询问诊记录
 export function getPatientConsultOrderListAPI(params: patientConsultOrderListQuery) {
   return request<patientConsultOrderListData>({
@@ -73,3 +74,31 @@ export function getPatientConsultOrderListAPI(params: patientConsultOrderListQue
     params
   })
 }
+// QQ登录
+export const loginByQQ = (data: {
+  openId: string
+  nickname: string
+  avatar: string
+  source: string
+}) =>
+  request<user>({
+    url: '/login/thirdparty',
+    method: 'POST',
+    data
+  })
+
+// 发送验证码
+export const sendMobileCode = (mobile: string, type: CodeType) =>
+  request<{ code: string }>({
+    url: '/code',
+    method: 'GET',
+    params: { mobile, type }
+  })
+
+// 手机号绑定
+export const bindMobile = (data: { mobile: string; code: string; openId: string }) =>
+  request<user>({
+    url: '/login/binding',
+    method: 'POST',
+    data
+  })

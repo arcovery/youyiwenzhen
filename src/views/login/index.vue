@@ -8,8 +8,9 @@ import { useRouter } from 'vue-router'
 import { onUnmounted } from 'vue'
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
+import axios from 'axios'
 const router = useRouter()
-const route=useRoute()
+const route = useRoute()
 const store = useUserStore()
 // 定义表单对象
 const mobile = ref<string>('13230000001')
@@ -40,7 +41,7 @@ const onSubmit = async () => {
   if (res.code === 10000) {
     showNotify({ type: 'success', message: '登录成功' })
     store.setUser(res.data)
-    router.push(route.query.returnUrl as string || '/')
+    router.push((route.query.returnUrl as string) || '/')
   }
 }
 
@@ -86,6 +87,15 @@ const sendCode = async () => {
 onUnmounted(() => {
   window.clearInterval(timeId)
 })
+
+// 微信登录
+const loginWx = async () => {
+  const res = await axios.get(
+    `/wechat/connect.php?act=login&appid=1599&appkey=953e44a9c89f435e1b3624fe89cf5c95&type=wx&redirect_uri=${window.location.origin}/login/callback`
+  )
+  location.href = res.data.qrcode
+  console.log(res)
+}
 </script>
 
 <template>
@@ -142,8 +152,18 @@ onUnmounted(() => {
     <!-- 底部 -->
     <div class="login-other">
       <van-divider>第三方登录</van-divider>
+      <!-- <div class="icon">
+        <a
+          class="icon"
+          href="https://graph.qq.com/oauth2.0/authorize?client_id=102015968&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fconsult-patients.itheima.net%2Flogin%2Fcallback"
+        >
+          <img src="@/assets/qq.svg" alt="" />
+        </a>
+      </div> -->
       <div class="icon">
-        <img src="@/assets/logo.svg" alt="" />
+        <div @click="loginWx" class="icon">
+          <img src="@/assets/wx.svg" alt="" />
+        </div>
       </div>
     </div>
   </div>
@@ -151,9 +171,9 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .login {
-    &-page {
-      padding-top: 46px;
-    }
+  &-page {
+    padding-top: 46px;
+  }
   &-head {
     display: flex;
     padding: 30px 30px 50px;

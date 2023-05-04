@@ -31,12 +31,12 @@ export default defineConfig({
     // open: true,
     hmr: { overlay: false },
     host: '0.0.0.0',
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://consult-api.itheima.net/',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, '')
-    //   }
-    // }
+    proxy: {
+      '/wechat': {
+        target: 'https://uniqueker.top/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/wechat/, '')
+      }
+    }
   }
 })
